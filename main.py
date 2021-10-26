@@ -135,7 +135,7 @@ class Executor:
         if req.status_code in self.allowed_codes:
             scripts = parse_js_links(req.content)
             scripts = format_links(scripts, path)
-
+            scripts.append(path)
             for script in scripts:
                 try:
                     req = requests.get(script, headers=headers, verify=False)
