@@ -122,7 +122,7 @@ class Executor:
     # Returns the full url with protocol, domain and path if success or
     # False if not
     def execute(self, domain, protocol, ip=None, port=None):
-        print(sname, f'New domain {domain}, {ip}, {port}, {protocol}')
+        #print(sname, f'New domain {domain}, {ip}, {port}, {protocol}')
 
         path = f"{protocol}://{ip}/"
         headers['Host'] = domain
@@ -131,7 +131,7 @@ class Executor:
         except Exception as err:
             print(err)
             return False
-        print(req.status_code, req.url, [r.url + str(r.status_code) for r in req.history])
+        #print(req.status_code, req.url, [r.url + str(r.status_code) for r in req.history])
         if req.status_code in self.allowed_codes:
             scripts = parse_js_links(req.content)
             scripts = format_links(scripts, path)
@@ -147,7 +147,7 @@ class Executor:
                     keys, regex = extract_keys(req.text)
                     if keys:
                         print(sname, Fore.RED + f'SUCCESS!!!{domain} {script} {regex}:{keys}')
-                        return script
+                        return f'{protocol}://{domain} {regex} {keys}'
 
         return False  # unsuccessfull
 
